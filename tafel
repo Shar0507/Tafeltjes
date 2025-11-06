@@ -1,53 +1,69 @@
-Werkende Fibonacci Code:
-
-<!DOCTYPE html>
+maak net als deze afbeelding <!DOCTYPE html>
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
     <title>Fibonacci automaat</title>
 </head>
 <body>
-
     <h2>Fibonacci automaat</h2>
 
     <form method="POST">
         Voer getal in: 
-           <input type="number" name="n" min="1" max=
-           "12" required>
-           <input type="submit" name="action" value="toon">
-         <input type="submit" name="action" value="reset">
- </form>
+        <input type="number" name="n" min="1" max="12" required>
+        <input type="submit" name="action" value="toon">
+        <input type="submit" name="action" value="reset">
+    </form>
 
     <?php
-    if ($_SERVER["REQUEST_METHOD"] === "POST") {
-          if($_POST['action'] === "toon") {
-         $n = intval($_POST["n"]);
-      if ($n > 0) {
-    echo "<table border='10' cellpadding='10'>";
+    function fibonacci_tabel($n) {
+        $a = 1;
+        $b = 2;
 
-                 echo "<tr><th>Tafel van</th>";
+        echo "<h3>Fibonacci-reeks tot $n termen:</h3>";
+        echo "<table border='1' cellpadding='5'><tr>";
+
+        echo "<td>$a</td><td>$b</td>";
+
+        for ($i = 3; $i <= $n; $i++) {
+            $c = $a + $b;
+            echo "<td>$c</td>";
+            $a = $b;
+            $b = $c;
+        }
+
+        echo "</tr></table>";
+    }
+
+    if ($_SERVER["REQUEST_METHOD"] === "POST") {
+        if ($_POST['action'] === "toon") {
+            $n = intval($_POST["n"]);
+            if ($n > 0) {
+
+             echo "<table border='1' cellpadding='5'>";
+             echo "<tr><th>Tafel van</th>";
                 for ($i = 1; $i <= $n; $i++) {
-            echo "<th>$i</th>";
-            }
+                    echo "<th>$i</th>";
+                }
              echo "</tr>";
 
-            for ($i = 1; $i <= $n; $i++) {
-             echo "<tr>";
-                    echo "<th>$i</th>"; 
-             for ($j = 1; $j <= $n; $j++) {
-                    echo "<td>" . ($i * $j) . "</td>";
+             for ($i = 1; $i <= $n; $i++) {
+                    echo "<tr>";
+                    echo "<th>$i</th>";
+                    for ($j = 1; $j <= $n; $j++) {
+                        echo "<td>" . ($i * $j) . "</td>";
+                    }
+                    echo "</tr>";
                 }
-                echo "</tr>";
-            }
-
             echo "</table>";
-        } else {
-            echo "<p>is gereset!</p>";
+
+            fibonacci_tabel($n);
+
+            } else {
+                echo "<p>is gereset!</p>";
+            }
         }
-           }
     }
     ?>
 
 </body>
-
 </html>
